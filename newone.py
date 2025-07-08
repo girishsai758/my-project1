@@ -6,8 +6,8 @@ import os
 
 
 # Initialize or load Excel file
-EXCEL_FILE1 = "https://docs.google.com/spreadsheets/d/12ZQk6bg8HalpjM6C2HOd1jGtghNU9iclQR2F-n8NdBw/edit?gid=0#gid=0"
-EXCEL_FILE = "https://docs.google.com/spreadsheets/d/19XyhcWxM8BrxC7FaHUP6N-r72n-cSqnBKgKvgT3vzQo/edit?gid=0#gid=0"
+EXCEL_FILE1 = "manpower_data.xlsx"
+EXCEL_FILE = "user_data.xlsx"
 # Initial data
 initial_data = [
     ['ajay', 'supervisior'],
