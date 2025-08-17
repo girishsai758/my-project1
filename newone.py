@@ -247,40 +247,40 @@ if(option1=='create list'):
                # Replace this with your actual data variable
                #generally we need to convert it into dataframe since it is already a dataframe we don't need to convert it.
                # Convert DataFrame to Excel binary
-               excel_buffer = io.BytesIO()
-               man_power.to_excel(excel_buffer, index=False)
-               excel_binary = excel_buffer.getvalue()
+                excel_buffer = io.BytesIO()
+                man_power.to_excel(excel_buffer, index=False)
+                excel_binary = excel_buffer.getvalue()
                # 2. Get current file metadata
-               encoded_path = quote(FILE_PATH, safe='')  # URL-encode path
-               api_url = f"https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/contents/{encoded_path}?ref={BRANCH}"
+                encoded_path = quote(FILE_PATH, safe='')  # URL-encode path
+                api_url = f"https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/contents/{encoded_path}?ref={BRANCH}"
 
-               headers = {
+                headers = {
                 "Authorization": f"token {GITHUB_TOKEN}",
                  "Accept": "application/vnd.github.v3+json"
                   }
                # Get current file SHA
-               response = requests.get(api_url, headers=headers)
-               if response.status_code != 200:
+                response = requests.get(api_url, headers=headers)
+                if response.status_code != 200:
                    raise Exception(f"Failed to fetch file metadata: {response.text}")
     
-               file_data = response.json()
-               current_sha = file_data['sha']
+                file_data = response.json()
+                current_sha = file_data['sha']
 
               # 3. Prepare update payload
-              encoded_content = base64.b64encode(excel_binary).decode('utf-8')
-              payload = {
-                "message": COMMIT_MESSAGE,
+                encoded_content = base64.b64encode(excel_binary).decode('utf-8')
+                payload = {
+                 "message": COMMIT_MESSAGE,
                  "content": encoded_content,
                  "sha": current_sha,
                  "branch": BRANCH
-                }
+                 }
 
           # 4. Push update to GitHub
-              response = requests.put(api_url, headers=headers, json=payload)
+                response = requests.put(api_url, headers=headers, json=payload)
 
-              if response.status_code == 200:
+                if response.status_code == 200:
                   st.write("✅ File updated successfully!")
-              else:
+                else:
                   st.write(f"❌ Update failed: {response.status_code} - {response.text}")
 
 if(option1=='delete list'):
@@ -320,5 +320,6 @@ if(option1=='delete list'):
     st.dataframe(man_power.drop(columns=['Select'], errors='ignore'),
                  use_container_width=True,
                  hide_index=True)
+
 
 
