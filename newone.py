@@ -6,7 +6,7 @@ import os
 
 
 # Initialize or load Excel file
-EXCEL_FILE1 = "manpower_data.xlsx"
+EXCEL_FILE1 = "manpower_data(1).xlsx"
 EXCEL_FILE = "user_data.xlsx"
 # Initial data
 initial_data = [
@@ -184,16 +184,16 @@ if (option1=='upload data'):
             st.balloons()
 
 # Show existing data
-if os.path.exists(EXCEL_FILE):
+if os.path.exists(EXCEL_FILE1):
     st.divider()
     st.subheader("Saved Data Preview")
-    existing_data = pd.read_excel(EXCEL_FILE)
+    existing_data = pd.read_excel(EXCEL_FILE1)
     st.dataframe(existing_data.tail(10))  # Show last 3 entries
 
     # Download button
     st.download_button(
         label="Download Full Data",
-        data=pd.read_excel(EXCEL_FILE).to_csv(index=False).encode("utf-8"),
+        data=pd.read_excel(EXCEL_FILE1).to_csv(index=False).encode("utf-8"),
         file_name="user_data.csv",
         mime="text/csv"
     )
@@ -228,7 +228,7 @@ if(option1=='create list'):
                 man_power = pd.concat([man_power, new_entry], ignore_index=True)
 
                 # Save to Excel
-                man_power.to_excel(EXCEL_FILE, index=False)
+                man_power.to_excel(EXCEL_FILE1, index=False)
                 st.success(f"✅ Added {name} ({work_type}) to workforce!")
                 st.rerun()
 
@@ -257,7 +257,7 @@ if(option1=='delete list'):
             man_power = edited_df[~edited_df['Select']].drop(columns=['Select'])
 
             # Save to Excel
-            man_power.to_excel(EXCEL_FILE, index=False)
+            man_power.to_excel(EXCEL_FILE1, index=False)
             st.success(f"✅ Removed {edited_df['Select'].sum()} worker(s)")
             st.rerun()
         else:
@@ -269,3 +269,4 @@ if(option1=='delete list'):
     st.dataframe(man_power.drop(columns=['Select'], errors='ignore'),
                  use_container_width=True,
                  hide_index=True)
+
